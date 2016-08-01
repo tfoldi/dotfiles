@@ -13,13 +13,12 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Let vundle manage itself:
-Bundle 'gmarik/vundle'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
 " Just a shitload of color schemes.
 " https://github.com/flazz/vim-colorschemes#current-colorschemes
 Bundle 'flazz/vim-colorschemes'
-
 
 " Fuzzy finder -- absolutely must have.
 Bundle 'kien/ctrlp.vim'
@@ -46,7 +45,17 @@ Bundle 'groenewege/vim-less'
 " Coffee-script syntax.
 Bundle 'kchmck/vim-coffee-script'
 
+" Clojure and clojurescript support with alternate repl
+Bundle 'guns/vim-clojure-static'
 
+" Rainbow pars
+Bundle 'kien/rainbow_parentheses.vim'
+
+" Fireplace nREPL for clojure
+Bundle 'tpope/vim-fireplace'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 
 
 " We have to turn this stuff back on if we want all of our features.
@@ -169,9 +178,10 @@ let g:ctrlp_max_height = 30
 " link above (back up where we included the bundle of a ton of themes.)
 "colorscheme autumnleaf
 
-
-"make vim save and load the folding of the document each time it loads"
-""also places the cursor in the last place that it was left."
-au BufWinLeave * mkview
-au BufWinEnter * silent loadview
-
+" When editing a file, always jump to the last cursor position
+autocmd BufReadPost *
+      \ if ! exists("g:leave_my_cursor_position_alone") |
+      \     if line("'\"") > 0 && line ("'\"") <= line("$") |
+      \         exe "normal g'\"" |
+      \     endif |
+      \ endif

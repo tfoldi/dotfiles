@@ -28,7 +28,7 @@ ZSH_THEME=wezm
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -50,7 +50,7 @@ ZSH_THEME=wezm
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git aws dirhistory lein )
 
 # User configuration
 
@@ -86,4 +86,4 @@ source $ZSH/oh-my-zsh.sh
 
 export PS1='[%B%n@%m%b]$(git_prompt_info)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[yellow]%}%#%{$reset_color%} '
 
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'"
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
