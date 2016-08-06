@@ -54,6 +54,9 @@ Bundle 'kien/rainbow_parentheses.vim'
 " Fireplace nREPL for clojure
 Bundle 'tpope/vim-fireplace'
 
+" Auto paste detection from iTerm2
+Bundle 'ConradIrwin/vim-bracketed-paste'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -177,6 +180,11 @@ let g:ctrlp_max_height = 30
 " Finally the color scheme. Choose whichever you want from the list in the
 " link above (back up where we included the bundle of a ton of themes.)
 "colorscheme autumnleaf
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax clojure RainbowParenthesesLoadRound
+au Syntax clojure RainbowParenthesesLoadSquare
+au Syntax clojure RainbowParenthesesLoadBraces
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
