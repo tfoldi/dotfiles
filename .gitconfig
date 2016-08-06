@@ -8,3 +8,5 @@ ignored = !git ls-files -v | grep "^[[:lower:]]"
 	email = tfoldi@starschema.net
 [push]
 	default = matching
+[core]
+	editor = /usr/local/bin/vim
