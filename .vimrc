@@ -57,6 +57,9 @@ Bundle 'tpope/vim-fireplace'
 " Auto paste detection from iTerm2
 Bundle 'ConradIrwin/vim-bracketed-paste'
 
+" TagBar to view Tags
+Bundle 'vladh/tagbar' 
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -185,6 +188,10 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax clojure RainbowParenthesesLoadRound
 au Syntax clojure RainbowParenthesesLoadSquare
 au Syntax clojure RainbowParenthesesLoadBraces
+
+" Toggle TagBar with F8
+nmap <F8> :TagbarToggle<CR>
+
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
