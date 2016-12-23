@@ -23,6 +23,9 @@ Bundle 'flazz/vim-colorschemes'
 " Fuzzy finder -- absolutely must have.
 Bundle 'kien/ctrlp.vim'
 
+" NERD Tree -- A tree explorer
+Bundle 'scrooloose/nerdtree'
+
 " Support for easily toggling comments.
 Bundle 'tpope/vim-commentary'
 
@@ -184,6 +187,12 @@ let g:ctrlp_map = '<c-t>'
 " Let ctrlp have up to 30 results.
 let g:ctrlp_max_height = 30
 
+" NERD Tree
+" Map NERDTree to Ctrl-N
+map <C-n> :NERDTreeToggle<CR>
+" Close vim if only NERD Tree is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 
 " Finally the color scheme. Choose whichever you want from the list in the
 " link above (back up where we included the bundle of a ton of themes.)
@@ -199,9 +208,11 @@ nmap <F8> :TagbarToggle<CR>
 
 " Toggle Buffer explorer
 nnoremap <silent> <c-F11> :BufExplorer<CR>
+nmap <c-b> :BufExplorer<CR>
 
 " Enable status bar
 set laststatus=2
+
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
