@@ -54,7 +54,7 @@ plugins=(git aws dirhistory lein )
 
 # User configuration
 
-export PATH="/usr/local/bin:/sbin:/usr/sbin:/Users/tfoldi/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tfoldi/Library/Android/sdk/ndk-bundle"
+export PATH="/usr/local/bin:/sbin:/usr/sbin:/Users/tfoldi/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tfoldi/Library/Android/sdk/ndk-bundle:$HOME/Library/Haskell/bin:~/Library/Android/sdk/platform-tools"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -84,6 +84,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# To use cellar's psql binary
+export DYLD_LIBRARY_PATH=/usr/local/Cellar/postgresql/9.5.1/lib/
+
+# my lovely PS1
 export PS1='[%B%n@%m%b]$(git_prompt_info)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[yellow]%}%#%{$reset_color%} '
 
+# to store dotfiles in github
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# for hub command
+eval "$(hub alias -s)"
