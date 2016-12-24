@@ -26,8 +26,17 @@ Bundle 'kien/ctrlp.vim'
 " NERD Tree -- A tree explorer
 Bundle 'scrooloose/nerdtree'
 
+" Git plugin for NERDTree
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" awesome git plugin for vim
+Plugin 'tpope/vim-fugitive'
+
 " Support for easily toggling comments.
 Bundle 'tpope/vim-commentary'
+
+" emmet is a high speed HTML/CSS editor
+Plugin 'mattn/emmet-vim'
 
 " Proper JSON filetype detection, and support.
 Bundle 'leshill/vim-json'
@@ -51,11 +60,17 @@ Bundle 'kchmck/vim-coffee-script'
 " Clojure and clojurescript support with alternate repl
 Bundle 'guns/vim-clojure-static'
 
+" Elm language support
+Plugin 'lambdatoast/elm.vim'
+
 " Rainbow pars
 Bundle 'kien/rainbow_parentheses.vim'
 
 " Fireplace nREPL for clojure
 Bundle 'tpope/vim-fireplace'
+
+" Code completion engine 
+Plugin 'valloric/youcompleteme'
 
 " Auto paste detection from iTerm2
 Bundle 'ConradIrwin/vim-bracketed-paste'
@@ -187,6 +202,13 @@ let g:ctrlp_map = '<c-t>'
 " Let ctrlp have up to 30 results.
 let g:ctrlp_max_height = 30
 
+" use emmet only for html and css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+" Load ycm config files automatically
+let g:ycm_confirm_extra_conf = 0
+
 " NERD Tree
 " Map NERDTree to Ctrl-N
 map <C-n> :NERDTreeToggle<CR>
@@ -210,9 +232,11 @@ nmap <F8> :TagbarToggle<CR>
 nnoremap <silent> <c-F11> :BufExplorer<CR>
 nmap <c-b> :BufExplorer<CR>
 
+" compile current elm file
+nnoremap <leader>em :ElmMakeCurrentFile<CR>
+
 " Enable status bar
 set laststatus=2
-
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
