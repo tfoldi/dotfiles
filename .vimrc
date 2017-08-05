@@ -125,6 +125,9 @@ set showmatch " live match highlighting
 set hlsearch " highlight matches
 set gdefault " use the `g` flag by default.
 
+" Fix C++11 lambda identation issues
+"setlocal cindent cino=j1,(0,ws,ws
+
 set viminfo='20,\"50	
 set tags=./tags,./../tags,./../../tags,./../../../tags,./../../../../tags
 
