@@ -54,7 +54,7 @@ plugins=(git aws dirhistory lein )
 
 # User configuration
 
-export PATH="/usr/local/bin:/sbin:/usr/sbin:/Users/tfoldi/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tfoldi/Library/Android/sdk/ndk-bundle:$HOME/Library/Haskell/bin:~/Library/Android/sdk/platform-tools"
+export PATH="/usr/local/bin:/sbin:/usr/sbin:/Users/tfoldi/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tfoldi/Library/Android/sdk/ndk-bundle:$HOME/Library/Haskell/bin:~/Library/Android/sdk/platform-tools:/usr/local/share/dotnet"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -95,3 +95,13 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # for hub command
 eval "$(hub alias -s)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/tfoldi/Developer/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/tfoldi/Developer/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/tfoldi/Developer/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/tfoldi/Developer/google-cloud-sdk/completion.zsh.inc'; fi
+
+# hadoop cluster aliases
+alias hstart="/usr/local/Cellar/hadoop/2.8.0/sbin/start-dfs.sh;/usr/local/Cellar/hadoop/2.8.0/sbin/start-yarn.sh"
+alias hstop="/usr/local/Cellar/hadoop/2.8.0/sbin/stop-yarn.sh;/usr/local/Cellar/hadoop/2.8.0/sbin/stop-dfs.sh"
