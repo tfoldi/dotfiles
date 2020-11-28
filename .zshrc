@@ -50,11 +50,11 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws dirhistory lein )
+plugins=(git aws dirhistory lein zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
 
-export PATH="/usr/local/bin:/sbin:/usr/sbin:/Users/tfoldi/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tfoldi/Library/Android/sdk/ndk-bundle:$HOME/Library/Haskell/bin:~/Library/Android/sdk/platform-tools:/usr/local/share/dotnet"
+export PATH="/usr/local/bin:/sbin:/usr/sbin:/Users/tfoldi/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tfoldi/Library/Android/sdk/ndk-bundle:$HOME/Library/Haskell/bin:~/Library/Android/sdk/platform-tools"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -63,11 +63,12 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+alias vim=$EDITOR
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -96,12 +97,47 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # for hub command
 eval "$(hub alias -s)"
 
+function code {
+    if [[ $# = 0 ]]
+    then
+        open -a "Visual Studio Code"
+    else
+        local argPath="$1"
+        [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
+        open -a "Visual Studio Code" "$argPath"
+    fi
+}
+
+# kubectl
+function kube-attach {
+    if [[ $# = 0 ]]
+    then
+        echo "kubectl-attach requires 1 argument! Exiting."
+    else
+        kubectl exec -it $1 bash
+    fi
+}
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/tfoldi/Developer/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/tfoldi/Developer/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/tfoldi/Developer/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/tfoldi/Developer/google-cloud-sdk/completion.zsh.inc'; fi
 
-# hadoop cluster aliases
+# hadoop cluster related aliases and envs
+export HCAT_HOME=/usr/local/opt/hive/libexec/hcatalog
 alias hstart="/usr/local/Cellar/hadoop/2.8.0/sbin/start-dfs.sh;/usr/local/Cellar/hadoop/2.8.0/sbin/start-yarn.sh"
+alias dfsstart="/usr/local/Cellar/hadoop/2.8.0/sbin/start-dfs.sh"
 alias hstop="/usr/local/Cellar/hadoop/2.8.0/sbin/stop-yarn.sh;/usr/local/Cellar/hadoop/2.8.0/sbin/stop-dfs.sh"
+alias dfsstop="/usr/local/Cellar/hadoop/2.8.0/sbin/stop-dfs.sh"
+
+# Mono, .NET
+export PATH=/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/bin/:${PATH}
+export PATH="/usr/local/opt/libxml2/bin:$PATH"
+if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+
+#haskell 
+source /Users/tfoldi/.ghcup/env
+
+# added by Snowflake SnowSQL installer v1.2
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
