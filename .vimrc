@@ -63,6 +63,9 @@ Bundle 'guns/vim-clojure-static'
 " Elm language support
 Plugin 'lambdatoast/elm.vim'
 
+" Fsharp language support
+Plugin 'fsharp/vim-fsharp'
+
 " Rainbow pars
 Bundle 'kien/rainbow_parentheses.vim'
 
@@ -70,7 +73,7 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'tpope/vim-fireplace'
 
 " Code completion engine 
-Plugin 'valloric/youcompleteme'
+" Plugin 'valloric/youcompleteme'
 
 " Auto paste detection from iTerm2
 Bundle 'ConradIrwin/vim-bracketed-paste'
@@ -101,7 +104,7 @@ set smarttab " let's tab key insert 'tab stops', and bksp deletes tabs.
 set shiftround " tab / shifting moves to closest tabstop.
 set autoindent " Match indents on new lines.
 set smartindent " Intellegently dedent / indent new lines based on rules.
-
+set splitbelow " split always under the current window
 
 " general settings 
 set showcmd
@@ -212,6 +215,9 @@ autocmd FileType html,css EmmetInstall
 " Load ycm config files automatically
 let g:ycm_confirm_extra_conf = 0
 
+" use custom python3.7
+let g:ycm_server_python_interpreter = '/usr/local/bin/python3.7'
+
 " NERD Tree
 " Map NERDTree to Ctrl-N
 map <C-n> :NERDTreeToggle<CR>
@@ -222,6 +228,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Finally the color scheme. Choose whichever you want from the list in the
 " link above (back up where we included the bundle of a ton of themes.)
 "colorscheme autumnleaf
+color vim
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax clojure RainbowParenthesesLoadRound
@@ -248,3 +255,5 @@ autocmd BufReadPost *
       \         exe "normal g'\"" |
       \     endif |
       \ endif
+
+let g:fsharp_interactive_bin =  '/usr/local/bin/fsharpiAnyCpu'

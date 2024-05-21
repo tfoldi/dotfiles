@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/tfoldi/.oh-my-zsh
 
@@ -6,7 +13,8 @@ export ZSH=/Users/tfoldi/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="robbyrussell"
-ZSH_THEME=wezm
+#ZSH_THEME=wezm
+ZSH_THEME=powerlevel10k
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -46,11 +54,14 @@ ENABLE_CORRECTION="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# fzf
+export FZF_BASE=/opt/homebrew/Cellar/fzf/0.44.1/shell/
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws dirhistory lein zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git docker aws dirhistory lein zsh-autosuggestions zsh-syntax-highlighting fzf kubectl azcli)
 
 # User configuration
 
@@ -85,17 +96,11 @@ alias vim=$EDITOR
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# To use cellar's psql binary
-export DYLD_LIBRARY_PATH=/usr/local/Cellar/postgresql/9.5.1/lib/
-
 # my lovely PS1
-export PS1='[%B%n@%m%b]$(git_prompt_info)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[yellow]%}%#%{$reset_color%} '
+#export PS1='[%B%n@%m%b]$(git_prompt_info)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[yellow]%}%#%{$reset_color%} '
 
 # to store dotfiles in github
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-# for hub command
-eval "$(hub alias -s)"
 
 function code {
     if [[ $# = 0 ]]
@@ -114,7 +119,7 @@ function kube-attach {
     then
         echo "kubectl-attach requires 1 argument! Exiting."
     else
-        kubectl exec -it $1 bash
+        kubectl exec -it $1 $2 $3 $4 -- bash
     fi
 }
 
@@ -123,6 +128,7 @@ if [ -f '/Users/tfoldi/Developer/google-cloud-sdk/path.zsh.inc' ]; then source '
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/tfoldi/Developer/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/tfoldi/Developer/google-cloud-sdk/completion.zsh.inc'; fi
+
 
 # hadoop cluster related aliases and envs
 export HCAT_HOME=/usr/local/opt/hive/libexec/hcatalog
@@ -134,10 +140,48 @@ alias dfsstop="/usr/local/Cellar/hadoop/2.8.0/sbin/stop-dfs.sh"
 # Mono, .NET
 export PATH=/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/bin/:${PATH}
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
-if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+if [ /opt/homebrew/bin/kubectl ]; then source <(kubectl completion zsh); fi
+if [ /opt/homebrew/bin/pulumi ]; then source <(/opt/homebrew/bin/pulumi completion zsh 2>/dev/null); fi
+
 
 #haskell 
-source /Users/tfoldi/.ghcup/env
+# source /Users/tfoldi/.ghcup/env
+
+eval $(/opt/homebrew/bin/brew shellenv) 
 
 # added by Snowflake SnowSQL installer v1.2
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
+
+unset SSH_AUTH_SOCK
+
+
+#export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/tfoldi/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/tfoldi/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/tfoldi/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/tfoldi/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/Users/tfoldi/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/Users/tfoldi/miniforge3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
